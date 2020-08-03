@@ -8,11 +8,12 @@
         "port": "3306"
     },
     "test": {
-        "username": "root",
-        "password": null,
-        "database": "database_test",
-        "host": "127.0.0.1",
-        "dialect": "mysql"
+        "username": "jj3iaf1rxjsq1q3q",
+        "password": "oc235xlf63irmd5e",
+        "database": "g8mxel7kvjw6q3fb",
+        "host": "mkorvuw3sl6cu9ms.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+        "dialect": "mysql",
+        "port": "3306"
     },
     "production": {
         "username": "jj3iaf1rxjsq1q3q",

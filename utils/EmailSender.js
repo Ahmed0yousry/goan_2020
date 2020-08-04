@@ -1,6 +1,6 @@
 const mailgun = require("mailgun-js");
-const DOMAIN = 'sandbox625c94c041324051bfb2d41949b525f5.mailgun.org';
-const api_key = "657b30b6c24354d83f6d949dbb94c2c8-f7d0b107-3017dcde";
+const DOMAIN = 'mail.goanapp.me';
+const api_key = "4a553526c14c41229d3b81ddf962edeb-f7d0b107-1311d563";
 const mg = mailgun({ apiKey: api_key, domain: DOMAIN });
 
 module.exports = (user_email, verification_code) => {

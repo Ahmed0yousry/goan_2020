@@ -3,6 +3,8 @@ const { body } = require('express-validator/check');
 
 const userController = require('../controllers/userController');
 const navigation = require('../utils/navigation');
+const isAuth = require('../middleware/is_auth');
+
 
 var router = express.Router();
 
@@ -43,5 +45,7 @@ router.post('/signUp', [
 ], userController.SignUP);
 
 router.post('/verifySignUP', userController.verifySignUP);
+
+
 
 module.exports = router;

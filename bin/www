@@ -8,6 +8,9 @@ var app = require('../app');
 var debug = require('debug')('goan_2020:server');
 var http = require('http');
 var allModels = require('../models/all');
+var playGroundOwner = allModels.playGroundOwner;
+var playGround = allModels.playGround;
+
 
 /**
  * Get port from environment and store in Express.
@@ -25,8 +28,11 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-sequelize.sync({ force: true })
-    // sequelize.sync()
+playGroundOwner.hasMany(playGround);
+playGround.belongsTo(playGroundOwner);
+
+// sequelize.sync({ force: true })
+sequelize.sync()
     .then(res => {
         console.log("connection and sync is ok");
         server.listen(port);

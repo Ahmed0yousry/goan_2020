@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 var phoneToken = require('generate-sms-verification-code');
 const { validationResult } = require('express-validator/check');
 
+var playground = require('../models/playground');;
 var navigation = require('../utils/navigation');
 var emailSender = require('../utils/EmailSender');
 
@@ -87,6 +88,7 @@ exports.userLogIN = (req, res, next) => {
     const password = req.body.G_Password;
     const type = req.body.G_Type;
     var user = navigation(type);
+    var userId;
     user.findOne({
             where: {
                 email: email,
@@ -99,6 +101,7 @@ exports.userLogIN = (req, res, next) => {
                 error.statusCode = 401;
                 throw error;
             }
+            userId = res_user.id;
             // temporary just using the regular password
             return bcrypt.compare(password, res_user.password);
         })
@@ -108,7 +111,7 @@ exports.userLogIN = (req, res, next) => {
                 error.statusCode = 401;
                 throw error;
             }
-            const Token = jwt.sign({ email: email, userId: user.id },
+            const Token = jwt.sign({ email: email, userId: userId, type: type },
                 'anaAHMEDyousry1998', { expiresIn: '1h' });
             res.status(200).json({ token: Token, type: type });
         })

@@ -1,11 +1,12 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-var phoneToken = require('generate-sms-verification-code')
+var phoneToken = require('generate-sms-verification-code');
 const { validationResult } = require('express-validator/check');
 
-
-const user = require('../models/user');
+var navigation = require('../utils/navigation');
 var emailSender = require('../utils/EmailSender');
+
+
 // sign Up API
 exports.SignUP = (req, res, next) => {
     const errors = validationResult(req);
@@ -20,7 +21,8 @@ exports.SignUP = (req, res, next) => {
     const password = req.body.G_Password;
     const Fname = req.body.G_Fname;
     const Lname = req.body.G_Lname;
-
+    const type = req.body.G_Type;
+    var user = navigation(type);
     bcrypt
         .hash(password, 12)
         .then(hashedPw => {
@@ -49,6 +51,8 @@ exports.SignUP = (req, res, next) => {
 exports.verifySignUP = (req, res, next) => {
     const userId = parseInt(req.body.G_userId);
     const verification_Code = req.body.G_V_code;
+    const type = req.body.G_Type;
+    var user = navigation(type);
     user.findOne({
             where: {
                 id: userId,
@@ -81,6 +85,8 @@ exports.verifySignUP = (req, res, next) => {
 exports.userLogIN = (req, res, next) => {
     const email = req.body.G_Email;
     const password = req.body.G_Password;
+    const type = req.body.G_Type;
+    var user = navigation(type);
     user.findOne({
             where: {
                 email: email,
@@ -104,7 +110,7 @@ exports.userLogIN = (req, res, next) => {
             }
             const Token = jwt.sign({ email: email, userId: user.id },
                 'anaAHMEDyousry1998', { expiresIn: '1h' });
-            res.status(200).json({ token: Token });
+            res.status(200).json({ token: Token, type: type });
         })
         .catch(err => {
             if (!err.statusCode) {

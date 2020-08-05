@@ -1,8 +1,8 @@
 var express = require('express');
 const { body } = require('express-validator/check');
 
-const user = require('../models/user');
 const userController = require('../controllers/userController');
+const navigation = require('../utils/navigation');
 
 var router = express.Router();
 
@@ -14,6 +14,7 @@ router.post('/signUp', [
     .isEmail()
     .withMessage('Please enter a valid email.')
     .custom((value, { req }) => {
+        var user = navigation(req.body.G_Type);
         return user.findOne({ where: { email: value } }).then(userDoc => {
             if (userDoc) {
                 return Promise.reject('E-Mail address already exists!');

@@ -2,7 +2,7 @@ const sequelize = require('../models/index');
 const Sequelize = require('sequelize');
 
 
-const User = sequelize.define('user', {
+const player = sequelize.define('player', {
     id: {
         type: Sequelize.DataTypes.INTEGER,
         primaryKey: true,
@@ -46,4 +46,4 @@ const User = sequelize.define('user', {
     }
 });
 
-module.exports = User;
+module.exports = player;

@@ -36,7 +36,7 @@ exports.SignUP = (req, res, next) => {
         })
         .then(result => {
             emailSender(email, generatedToken);
-            res.status(201).json({ message: 'please check your email to verify your account', userId: result.id });
+            res.status(201).json({ message: 'please check your email to verify your account', userId: result.id, type: type });
         })
         .catch(err => {
             if (!err.statusCode) {

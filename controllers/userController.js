@@ -93,14 +93,14 @@ exports.userLogIN = (req, res, next) => {
                 status: "verified"
             }
         })
-        .then(user => {
-            if (!user) {
+        .then(res_user => {
+            if (!res_user) {
                 const error = new Error('a user with this email cann\'t be found');
                 error.statusCode = 401;
                 throw error;
             }
             // temporary just using the regular password
-            return bcrypt.compare(password, user.password);
+            return bcrypt.compare(password, res_user.password);
         })
         .then(is_equal => {
             if (!is_equal) {

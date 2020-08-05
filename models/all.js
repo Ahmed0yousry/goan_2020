@@ -1,2 +1,2 @@
-module.exports = require('./playGroundOwner');
-module.exports = require('./player');
+exports.playGroundOwner = require('./playGroundOwner');
+exports.player = require('./player');

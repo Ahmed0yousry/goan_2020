@@ -10,6 +10,7 @@ var http = require('http');
 var allModels = require('../models/all');
 var playGroundOwner = allModels.playGroundOwner;
 var playGround = allModels.playGround;
+var feild = allModels.field;
 
 
 /**
@@ -28,8 +29,13 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+// attaching playground to a playground owner
 playGroundOwner.hasMany(playGround);
 playGround.belongsTo(playGroundOwner);
+
+// attaching feild to a playground  
+playGround.hasMany(feild);
+feild.belongsTo(playGround);
 
 sequelize.sync({ force: true })
     // sequelize.sync()

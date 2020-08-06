@@ -8,5 +8,6 @@ const playGroundController = require('../controllers/playGroundController');
 var router = express.Router();
 
 router.post('/createPlayGround', isAuth, playGroundController.createPlayGround);
+router.post('/createField', isAuth, playGroundController.createField);
 
 module.exports = router;

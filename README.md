@@ -7,3 +7,4 @@
     /logIn
   #### for playgrounds:
     /playgrounds/createPlayGround
+    /playgrounds/createField

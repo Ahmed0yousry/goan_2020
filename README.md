@@ -9,3 +9,4 @@
     /playgrounds/createPlayGround
     /playgrounds/createField
     /playgrounds/getFields
+    /playgrounds/getPlayGrounds

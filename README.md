@@ -8,3 +8,4 @@
   #### for playgrounds:
     /playgrounds/createPlayGround
     /playgrounds/createField
+    /playgrounds/getFields

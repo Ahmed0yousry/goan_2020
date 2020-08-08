@@ -8,8 +8,10 @@
   #### for playgrounds:
     /playgrounds/createPlayGround
     /playgrounds/createField
-    /playgrounds/getFields
+    /playgrounds/getFields/:G_playGroundId
     /playgrounds/getPlayGrounds
   #### for reservation:
     /reservation/getAvailableTimes/:FiledId/:Date
     /reservation/createReservaion
+    /reservation//getAllPlayGround_Reservations/:playGroundId
+    

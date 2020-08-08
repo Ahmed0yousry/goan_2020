@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var usersRouter = require('./routes/userRoutes');
 var playGroundsRouter = require('./routes/playrGroundRoutes');
+var reservationsRouter = require('./routes/reservationRoutes');
 
 
 var app = express();
@@ -22,7 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/', usersRouter);
 app.use('/playgrounds', playGroundsRouter);
-
+app.use('/reservation', reservationsRouter);
 
 
 app.use((req, res, next) => {
@@ -47,7 +48,7 @@ app.use(function(err, req, res, next) {
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
     // render the error page
-    // res.status(err.statusCode || 500);
+    res.status(err.statusCode || 500);
     res.json({ message: err.message, Errors: err.data });
 });
 

@@ -6,6 +6,10 @@ exports.createPlayGround = (req, res, next) => {
     const playGroundCity = req.body.G_City;
     const pricePerHour = req.body.G_PricePerHour;
     const active = req.body.G_Status;
+    const openingHour = req.body.G_OpeningHour;
+    const closingHour = req.body.G_ClosingHour;
+    const listOfAvailableDays = req.body.G_ListOfAvailableDays;
+
 
     const userId = req.userId;
     const type = req.type;
@@ -28,7 +32,10 @@ exports.createPlayGround = (req, res, next) => {
                 governate: playGroundGovernate,
                 city: playGroundCity,
                 pricePerHour: pricePerHour,
-                status: active
+                status: active,
+                openingHour: openingHour,
+                closingHour: closingHour,
+                listOfAvailableDays: listOfAvailableDays
             });
         })
         .then(is_created => {
@@ -37,7 +44,7 @@ exports.createPlayGround = (req, res, next) => {
                 error.statusCode = 401;
                 throw error;
             }
-            res.json({ message: 'your playground has been added successfully' });
+            res.json({ message: 'your playground has been added successfully', id: is_created.id });
         })
         .catch(err => {
             if (!err.statusCode) {

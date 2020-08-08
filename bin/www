@@ -11,6 +11,8 @@ var allModels = require('../models/all');
 var playGroundOwner = allModels.playGroundOwner;
 var playGround = allModels.playGround;
 var feild = allModels.field;
+var player = allModels.player;
+var reservation = allModels.reservation;
 
 
 /**
@@ -37,6 +39,14 @@ playGround.belongsTo(playGroundOwner);
 playGround.hasMany(feild);
 feild.belongsTo(playGround);
 
+player.hasMany(reservation);
+reservation.belongsTo(player);
+
+feild.hasMany(reservation);
+reservation.belongsTo(feild);
+
+
+// reservation.sync({ force: true })
 // sequelize.sync({ force: true })
 sequelize.sync()
     .then(res => {

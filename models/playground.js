@@ -33,6 +33,21 @@ const playGround = sequelize.define('playGround', {
         allowNull: false,
         required: true
     },
+    openingHour: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
+        required: true
+    },
+    closingHour: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
+        required: true
+    },
+    listOfAvailableDays: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false,
+        required: true
+    },
     rate: {
         type: Sequelize.DataTypes.STRING
     }

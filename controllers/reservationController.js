@@ -1,4 +1,6 @@
 var field = require('../models/feild');
+var playground = require('../models/playground');
+
 const getDifference = require('../utils/getDifference');
 var navigation = require('../utils/navigation');
 
@@ -102,9 +104,8 @@ exports.createReservaion = (req, res, next) => {
     const reservationDate = req.body.G_Date;
     const reservationTime = req.body.G_Time;
 
-    //jsut for testing
-    const userId = 2;
-    const type = "player";
+    const userId = req.userId;
+    const type = req.type;
     var user = navigation(type);
     user.findOne({
             where: {
@@ -132,6 +133,51 @@ exports.createReservaion = (req, res, next) => {
                 throw error;
             }
             res.json({ message: 'your reservation has been mede successfully', id: is_created.id });
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+}
+
+exports.getAllPlayGround_Reservations = (req, res, next) => {
+    const playGroundId = req.params.playGroundId;
+    playground.findOne({
+            where: {
+                id: playGroundId
+            }
+        })
+        .then(playground => {
+            if (!playground) {
+                const error = new Error('a playground with this id cann\'t be found');
+                error.statusCode = 401;
+                throw error;
+            }
+            // temporary just using the regular password
+            return playground.getFields();
+        })
+        .then(async fieldsArray => {
+            if (!fieldsArray.length) {
+                const error = new Error('there are no fields created for this playground');
+                error.statusCode = 401;
+                throw error;
+            }
+            var tempArrayOfReservations = [];
+            var totalArrayOfReservations = [];
+            for (var i = 0; i < fieldsArray.length; i++) {
+                tempArrayOfReservations = await fieldsArray[i].getReservations().then(reservationArray => {
+                    return reservationArray;
+                });
+                totalArrayOfReservations = totalArrayOfReservations.concat(tempArrayOfReservations);
+            }
+            if (!totalArrayOfReservations.length) {
+                const error = new Error('there are no reservations created for this playground');
+                error.statusCode = 401;
+                throw error;
+            } else
+                res.json({ totalArrayOfReservations: totalArrayOfReservations });
         })
         .catch(err => {
             if (!err.statusCode) {

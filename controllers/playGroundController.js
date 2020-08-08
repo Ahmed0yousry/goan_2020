@@ -115,7 +115,7 @@ exports.createField = (req, res, next) => {
 
 
 exports.getAllFields = (req, res, next) => {
-    const playGroundId = parseInt(req.body.G_playGroundId);
+    const playGroundId = req.params.G_playGroundId;
 
     const userId = req.userId;
     const type = req.type;

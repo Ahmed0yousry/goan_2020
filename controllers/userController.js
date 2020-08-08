@@ -112,7 +112,7 @@ exports.userLogIN = (req, res, next) => {
                 throw error;
             }
             const Token = jwt.sign({ email: email, userId: userId, type: type },
-                'anaAHMEDyousry1998', { expiresIn: '1h' });
+                'anaAHMEDyousry1998', { expiresIn: '2h' });
             res.status(200).json({ token: Token, type: type });
         })
         .catch(err => {

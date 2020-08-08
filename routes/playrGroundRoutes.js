@@ -10,7 +10,7 @@ var router = express.Router();
 router.post('/createPlayGround', isAuth, playGroundController.createPlayGround);
 router.post('/createField', isAuth, playGroundController.createField);
 
-router.get('/getFields', isAuth, playGroundController.getAllFields);
+router.get('/getFields/:G_playGroundId', isAuth, playGroundController.getAllFields);
 router.get('/getPlayGrounds', isAuth, playGroundController.getAllPlayGrounds);
 
 

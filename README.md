@@ -10,3 +10,6 @@
     /playgrounds/createField
     /playgrounds/getFields
     /playgrounds/getPlayGrounds
+  #### for reservation:
+    /reservation/getAvailableTimes/:FiledId/:Date
+    /reservation/createReservaion

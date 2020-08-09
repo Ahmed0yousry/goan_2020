@@ -7,6 +7,7 @@
     /logIn
   #### for playgrounds:
     /playgrounds/createPlayGround
+    /playgrounds/updatePlayGround
     /playgrounds/createField
     /playgrounds/getFields/:G_playGroundId
     /playgrounds/getPlayGrounds

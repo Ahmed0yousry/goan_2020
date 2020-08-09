@@ -23,8 +23,6 @@ module.exports.arr_diff = (a1, a2) => {
     for (var i = 0; i < totalDBTimes.length; i++) {
         if (a[totalDBTimes[i]]) {
             delete a[totalDBTimes[i]];
-        } else {
-            a[totalDBTimes[i]] = true;
         }
     }
 

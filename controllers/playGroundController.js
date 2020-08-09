@@ -54,6 +54,65 @@ exports.createPlayGround = (req, res, next) => {
         });
 }
 
+exports.updatePlayGround = (req, res, next) => {
+    var playGroundName = req.body.G_PlaygroundName;
+    var playGroundGovernate = req.body.G_Governate;
+    var playGroundCity = req.body.G_City;
+    var pricePerHour = req.body.G_PricePerHour;
+    var active = req.body.G_Status;
+    var openingHour = req.body.G_OpeningHour;
+    var closingHour = req.body.G_ClosingHour;
+    var listOfAvailableDays = req.body.G_ListOfAvailableDays;
+
+    const playGroundId = req.params.G_playGroundId;
+
+    const userId = req.userId;
+    const type = req.type;
+    var user = navigation(type);
+    user.findOne({
+            where: {
+                id: userId,
+                status: "verified"
+            }
+        })
+        .then(res_user => {
+            if (!res_user) {
+                const error = new Error('a user with this email cann\'t be found');
+                error.statusCode = 401;
+                throw error;
+            }
+            // temporary just using the regular password
+            return res_user.getPlayGrounds({
+                where: {
+                    id: playGroundId
+                }
+            });
+        })
+        .then(playgrounds => {
+            if (!playgrounds.length) {
+                const error = new Error('there is no playground with this id');
+                error.statusCode = 401;
+                throw error;
+            }
+            var playground = playgrounds[0];
+            playground.playgroundName = playGroundName;
+            playground.governate = playGroundGovernate;
+            playground.city = playGroundCity;
+            playground.pricePerHour = pricePerHour;
+            playground.status = active;
+            playground.openingHour = openingHour;
+            playground.closingHour = closingHour;
+            playground.listOfAvailableDays = listOfAvailableDays;
+            playground.save();
+            res.json({ message: 'your playground has been updated successfully' });
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+}
 exports.createField = (req, res, next) => {
     const FieldType = req.body.G_FieldType;
     const FieldWidth = req.body.G_FieldWidth;

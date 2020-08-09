@@ -8,7 +8,11 @@ const field = sequelize.define('field', {
         allowNull: false,
         autoIncrement: true
     },
-
+    pricePerHour: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: false,
+        required: true
+    },
     fieldWidth: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,

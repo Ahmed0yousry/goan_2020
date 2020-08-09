@@ -1,5 +1,6 @@
 var navigation = require('../utils/navigation');
-
+var playGround = require('../models/playground');
+const { Op } = require("sequelize");
 exports.createPlayGround = (req, res, next) => {
     const playGroundName = req.body.G_PlaygroundName;
     const playGroundGovernate = req.body.G_Governate;
@@ -31,7 +32,7 @@ exports.createPlayGround = (req, res, next) => {
                 playgroundName: playGroundName,
                 governate: playGroundGovernate,
                 city: playGroundCity,
-                pricePerHour: pricePerHour,
+                startingPricePerHour: pricePerHour,
                 status: active,
                 openingHour: openingHour,
                 closingHour: closingHour,
@@ -98,7 +99,7 @@ exports.updatePlayGround = (req, res, next) => {
             playground.playgroundName = playGroundName;
             playground.governate = playGroundGovernate;
             playground.city = playGroundCity;
-            playground.pricePerHour = pricePerHour;
+            playground.startingPricePerHour = pricePerHour;
             playground.status = active;
             playground.openingHour = openingHour;
             playground.closingHour = closingHour;
@@ -117,6 +118,7 @@ exports.createField = (req, res, next) => {
     const FieldType = req.body.G_FieldType;
     const FieldWidth = req.body.G_FieldWidth;
     const FieldLength = req.body.G_FieldLength;
+    const pricePerHour = parseInt(req.body.G_PricePerHour);
     const playGroundId = parseInt(req.body.G_playGroundId);
 
     const userId = req.userId;
@@ -153,7 +155,8 @@ exports.createField = (req, res, next) => {
             return playGround.createField({
                 fieldWidth: FieldWidth,
                 fieldLenth: FieldLength,
-                fieldType: FieldType
+                fieldType: FieldType,
+                pricePerHour: pricePerHour
             });
         })
         .then(is_created => {
@@ -251,6 +254,47 @@ exports.getAllPlayGrounds = (req, res, next) => {
                 throw error;
             }
             res.json({ playGrounds: playGrounds_array });
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+}
+
+exports.searchPlayGrounds = (req, res, next) => {
+    var governate = req.params.governate;
+    var startingPrice = req.params.price;
+    // city = city.toUpperCase();
+    playGround.findAll({
+            where: {
+                status: 'Active',
+                [Op.or]: [{
+                        governate: {
+                            [Op.like]: '%' + governate
+                        }
+                    }, {
+                        governate: {
+                            [Op.substring]: governate
+                        }
+                    }
+
+                ],
+                startingpricePerHour: {
+                    [Op.lte]: startingPrice
+                }
+            },
+            attributes: ['playgroundName', 'city', 'governate', 'startingpricePerHour']
+        })
+        .then(playGrounds => {
+            if (!playGrounds.length) {
+                const error = new Error('there are no playgrounds open in the chosen city can be found');
+                error.statusCode = 401;
+                throw error;
+            }
+            // temporary just using the regular password
+            res.json({ playGrounds: playGrounds });
         })
         .catch(err => {
             if (!err.statusCode) {

@@ -103,6 +103,7 @@ exports.createReservaion = (req, res, next) => {
     const fieldId = req.body.G_FieldId;
     const reservationDate = req.body.G_Date;
     const reservationTime = req.body.G_Time;
+    const totalCost = req.body.G_TotalCost;
 
     const userId = req.userId;
     const type = req.type;
@@ -123,7 +124,8 @@ exports.createReservaion = (req, res, next) => {
             return res_user.createReservation({
                 date: reservationDate,
                 time: reservationTime,
-                fieldId: fieldId
+                fieldId: fieldId,
+                totalCost: totalCost
             });
         })
         .then(is_created => {

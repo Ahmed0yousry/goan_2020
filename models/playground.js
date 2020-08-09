@@ -28,8 +28,8 @@ const playGround = sequelize.define('playGround', {
         allowNull: false,
         required: true
     },
-    pricePerHour: {
-        type: Sequelize.DataTypes.STRING,
+    startingPricePerHour: {
+        type: Sequelize.DataTypes.INTEGER,
         allowNull: false,
         required: true
     },

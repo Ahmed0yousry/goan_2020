@@ -1,6 +1,4 @@
 var navigation = require('../utils/navigation');
-var playGround = require('../models/playground');
-const { Op } = require("sequelize");
 exports.createPlayGround = (req, res, next) => {
     const playGroundName = req.body.G_PlaygroundName;
     const playGroundGovernate = req.body.G_Governate;
@@ -254,47 +252,6 @@ exports.getAllPlayGrounds = (req, res, next) => {
                 throw error;
             }
             res.json({ playGrounds: playGrounds_array });
-        })
-        .catch(err => {
-            if (!err.statusCode) {
-                err.statusCode = 500;
-            }
-            next(err);
-        });
-}
-
-exports.searchPlayGrounds = (req, res, next) => {
-    var governate = req.params.governate;
-    var startingPrice = req.params.price;
-    // city = city.toUpperCase();
-    playGround.findAll({
-            where: {
-                status: 'Active',
-                [Op.or]: [{
-                        governate: {
-                            [Op.like]: '%' + governate
-                        }
-                    }, {
-                        governate: {
-                            [Op.substring]: governate
-                        }
-                    }
-
-                ],
-                startingpricePerHour: {
-                    [Op.lte]: startingPrice
-                }
-            },
-            attributes: ['playgroundName', 'city', 'governate', 'startingpricePerHour']
-        })
-        .then(playGrounds => {
-            if (!playGrounds.length) {
-                const error = new Error('there are no playgrounds open in the chosen city can be found');
-                error.statusCode = 401;
-                throw error;
-            }
-            // temporary just using the regular password
-            res.json({ playGrounds: playGrounds });
         })
         .catch(err => {
             if (!err.statusCode) {

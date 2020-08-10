@@ -7,6 +7,8 @@ var logger = require('morgan');
 var usersRouter = require('./routes/userRoutes');
 var playGroundsRouter = require('./routes/playrGroundRoutes');
 var reservationsRouter = require('./routes/reservationRoutes');
+var playerRouter = require('./routes/playerRouter');
+
 
 
 var app = express();
@@ -24,6 +26,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', usersRouter);
 app.use('/playgrounds', playGroundsRouter);
 app.use('/reservation', reservationsRouter);
+app.use('/player', playerRouter);
+
 
 
 app.use((req, res, next) => {

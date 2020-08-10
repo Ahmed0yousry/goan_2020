@@ -11,7 +11,6 @@
     /playgrounds/createField
     /playgrounds/getFields/:G_playGroundId
     /playgrounds/getPlayGrounds
-    /playgrounds/searchPlayGrounds/:governate/:price
   #### for reservation:
     /reservation/getAvailableTimes/:FiledId/:Date
     /reservation/createReservaion
@@ -19,3 +18,4 @@
   #### for player
     /player/getPlayerProfile/:playerId
     /player/getAllPlayer_Reservations/:playerId
+    /player/searchPlayGrounds/:governate/:price

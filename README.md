@@ -16,4 +16,6 @@
     /reservation/getAvailableTimes/:FiledId/:Date
     /reservation/createReservaion
     /reservation/getAllPlayGround_Reservations/:playGroundId
-    
+  #### for player
+    /player/getPlayerProfile/:playerId
+    /player/getAllPlayer_Reservations/:playerId

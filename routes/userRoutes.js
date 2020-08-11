@@ -45,6 +45,7 @@ router.post('/signUp', [
 ], userController.SignUP);
 
 router.post('/verifySignUP', userController.verifySignUP);
+router.get('/getUserProfile', isAuth, userController.getUserProfile);
 
 
 

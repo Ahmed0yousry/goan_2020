@@ -9,6 +9,7 @@ var playGroundsRouter = require('./routes/playrGroundRoutes');
 var reservationsRouter = require('./routes/reservationRoutes');
 var playerRouter = require('./routes/playerRouter');
 
+var schedule = require('node-schedule');
 
 
 var app = express();
@@ -28,7 +29,17 @@ app.use('/playgrounds', playGroundsRouter);
 app.use('/reservation', reservationsRouter);
 app.use('/player', playerRouter);
 
+// var date1 = new Date(2020 - 08 - 08);
+// var date2 = new Date(2020 - 08 - 11);
+// var hours = (Math.abs(date1.getTime() - date2.getTime()) / (1000 * 3600));
+// console.log('the difference between 2 dates : ' + date2);
 
+
+var rule = new schedule.RecurrenceRule();
+rule.date = 15;
+var j = schedule.scheduleJob(rule, function() {
+    console.log('Today is recognized by Rebecca Black!');
+});
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');

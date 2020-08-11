@@ -2,33 +2,6 @@ const navigation = require('../utils/navigation');
 var playGround = require('../models/playground');
 const { Op } = require("sequelize");
 
-exports.getPlayerProfile = (req, res, next) => {
-    const userId = req.userId;
-    const type = req.type;
-    var user = navigation(type);
-    user.findOne({
-            where: {
-                id: userId,
-                status: "verified"
-            },
-            attributes: { exclude: ['password', 'status'] }
-        })
-        .then(res_user => {
-            if (!res_user) {
-                const error = new Error('a user with this email cann\'t be found');
-                error.statusCode = 401;
-                throw error;
-            }
-            res.json({ user: res_user });
-        })
-        .catch(err => {
-            if (!err.statusCode) {
-                err.statusCode = 500;
-            }
-            next(err);
-        });
-}
-
 exports.getAllPlayer_Reservations = (req, res, next) => {
     const userId = req.userId;
     const type = req.type;

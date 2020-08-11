@@ -19,3 +19,5 @@
     /player/getPlayerProfile/:playerId
     /player/getAllPlayer_Reservations/:playerId
     /player/searchPlayGrounds/:governate/:price
+  #### for cancelation
+    /cancel/cancelReservation

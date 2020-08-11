@@ -8,6 +8,7 @@ var usersRouter = require('./routes/userRoutes');
 var playGroundsRouter = require('./routes/playrGroundRoutes');
 var reservationsRouter = require('./routes/reservationRoutes');
 var playerRouter = require('./routes/playerRouter');
+var cancelRouter = require('./routes/cancelRouter');
 
 var schedule = require('node-schedule');
 
@@ -28,6 +29,8 @@ app.use('/', usersRouter);
 app.use('/playgrounds', playGroundsRouter);
 app.use('/reservation', reservationsRouter);
 app.use('/player', playerRouter);
+app.use('/cancel', cancelRouter);
+
 
 
 

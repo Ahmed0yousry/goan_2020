@@ -126,7 +126,8 @@ exports.createReservation = (req, res, next) => {
                 time: reservationTime,
                 fieldId: fieldId,
                 totalCost: totalCost,
-                status: 'OK'
+                status: 'OK',
+                canCancel: 1
             });
         })
         .then(is_created => {

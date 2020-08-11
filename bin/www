@@ -7,13 +7,16 @@ var sequelize = require('../models/index');
 var app = require('../app');
 var debug = require('debug')('goan_2020:server');
 var http = require('http');
+
 var allModels = require('../models/all');
 var playGroundOwner = allModels.playGroundOwner;
 var playGround = allModels.playGround;
-var feild = allModels.field;
+var field = allModels.field;
 var player = allModels.player;
 var reservation = allModels.reservation;
-
+var playerWallet = allModels.playerWallet;
+var ownerWallet = allModels.ownerWallet;
+var paymentTransaction = allModels.paymentTransaction;
 
 /**
  * Get port from environment and store in Express.
@@ -32,23 +35,34 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 // attaching playground to a playground owner
-playGroundOwner.hasMany(playGround);
+playGroundOwner.hasMany(playGround, { onDelete: 'CASCADE' });
 playGround.belongsTo(playGroundOwner);
 
-// attaching feild to a playground  
-playGround.hasMany(feild);
-feild.belongsTo(playGround);
+// attaching field to a playground  
+playGround.hasMany(field, { onDelete: 'CASCADE' });
+field.belongsTo(playGround);
 
 player.hasMany(reservation);
 reservation.belongsTo(player);
 
-feild.hasMany(reservation);
-reservation.belongsTo(feild);
+field.hasMany(reservation);
+reservation.belongsTo(field);
 
+player.hasOne(playerWallet, { onDelete: 'CASCADE' });
+playerWallet.belongsTo(player);
+
+playGroundOwner.hasOne(ownerWallet, { onDelete: 'CASCADE' });
+ownerWallet.belongsTo(playGroundOwner);
+
+player.hasMany(paymentTransaction);
+paymentTransaction.belongsTo(player);
+
+playGroundOwner.hasMany(paymentTransaction);
+paymentTransaction.belongsTo(playGroundOwner);
 
 // playGround.sync({ force: true })
-// sequelize.sync({ force: true })
-sequelize.sync()
+sequelize.sync({ force: true })
+// sequelize.sync()
     .then(res => {
         console.log("connection and sync is ok");
         server.listen(port);

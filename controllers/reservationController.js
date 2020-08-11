@@ -99,7 +99,7 @@ exports.getAvailableTimes = (req, res, next) => {
 
 
 
-exports.createReservaion = (req, res, next) => {
+exports.createReservation = (req, res, next) => {
     const fieldId = req.body.G_FieldId;
     const reservationDate = req.body.G_Date;
     const reservationTime = req.body.G_Time;
@@ -125,7 +125,8 @@ exports.createReservaion = (req, res, next) => {
                 date: reservationDate,
                 time: reservationTime,
                 fieldId: fieldId,
-                totalCost: totalCost
+                totalCost: totalCost,
+                status: 'OK'
             });
         })
         .then(is_created => {
@@ -134,7 +135,9 @@ exports.createReservaion = (req, res, next) => {
                 error.statusCode = 401;
                 throw error;
             }
-            res.json({ message: 'your reservation has been mede successfully', id: is_created.id });
+            req.fieldId = fieldId;
+            // here we need to pass the flow to payment middleware
+            next();
         })
         .catch(err => {
             if (!err.statusCode) {

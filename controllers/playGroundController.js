@@ -1,4 +1,5 @@
 var navigation = require('../utils/navigation');
+var playGround = require('../models/playground');
 exports.createPlayGround = (req, res, next) => {
     const playGroundName = req.body.G_PlaygroundName;
     const playGroundGovernate = req.body.G_Governate;
@@ -176,28 +177,10 @@ exports.createField = (req, res, next) => {
 
 exports.getAllFields = (req, res, next) => {
     const playGroundId = req.params.G_playGroundId;
-
-    const userId = req.userId;
-    const type = req.type;
-    var user = navigation(type);
-    user.findOne({
+    playGround.findOne({
             where: {
-                id: userId,
-                status: "verified"
+                id: playGroundId
             }
-        })
-        .then(res_user => {
-            if (!res_user) {
-                const error = new Error('a user with this email cann\'t be found');
-                error.statusCode = 401;
-                throw error;
-            }
-            // temporary just using the regular password
-            return res_user.getPlayGrounds({
-                where: {
-                    id: playGroundId
-                }
-            });
         })
         .then(playGround => {
             if (!playGround) {
@@ -207,7 +190,6 @@ exports.getAllFields = (req, res, next) => {
             }
             // because it returns A list and given the id is a primary key so what we need is 
             // essentially at the only first index
-            playGround = playGround[0];
             return playGround.getFields();
         })
         .then(fields_array => {

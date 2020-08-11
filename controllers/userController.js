@@ -158,3 +158,44 @@ exports.userLogIN = (req, res, next) => {
             next(err);
         });
 }
+
+
+exports.getUserProfile = (req, res, next) => {
+    const userId = req.userId;
+    const type = req.type;
+    var user = navigation(type);
+    var ReturnedUser;
+    user.findOne({
+            where: {
+                id: userId,
+                status: "verified"
+            },
+            attributes: { exclude: ['password', 'status'] }
+        })
+        .then(res_user => {
+            if (!res_user) {
+                const error = new Error('a user with this email cann\'t be found');
+                error.statusCode = 401;
+                throw error;
+            }
+            ReturnedUser = res_user;
+            if (type == "player") {
+                return res_user.getPlayerWallet();
+            } else {
+                return res_user.getOwnerWallet();
+            }
+        }).then(wallet => {
+            if (!wallet) {
+                const error = new Error('there is no wallet created for this user');
+                error.statusCode = 401;
+                throw error;
+            }
+            res.json({ user: ReturnedUser, wallet: wallet });
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+}

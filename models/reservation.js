@@ -27,6 +27,11 @@ const reservation = sequelize.define('reservation', {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
         required: true
+    },
+    canCancel: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: false,
+        required: true
     }
 });
 

@@ -80,7 +80,7 @@ exports.searchPlayGrounds = (req, res, next) => {
                     [Op.lte]: startingPrice
                 }
             },
-            attributes: ['playgroundName', 'city', 'governate', 'startingpricePerHour']
+            attributes: ['id', 'playgroundName', 'city', 'governate', 'startingpricePerHour']
         })
         .then(playGrounds => {
             if (!playGrounds.length) {

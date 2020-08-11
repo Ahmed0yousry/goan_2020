@@ -61,8 +61,8 @@ playGroundOwner.hasMany(paymentTransaction);
 paymentTransaction.belongsTo(playGroundOwner);
 
 // playGround.sync({ force: true })
-sequelize.sync({ force: true })
-// sequelize.sync()
+// sequelize.sync({ force: true })
+sequelize.sync()
     .then(res => {
         console.log("connection and sync is ok");
         server.listen(port);

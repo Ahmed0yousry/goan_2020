@@ -39,7 +39,7 @@ function generateListOfAvailableTimes(reservationsArray, opening_hour, closing_h
 }
 
 exports.getAvailableTimes = (req, res, next) => {
-    const fieldId = parseInt(req.params.FiledId);
+    const fieldId = req.params.FiledId;
     const date = req.params.Date;
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var daynumber = new Date(date).getDay();

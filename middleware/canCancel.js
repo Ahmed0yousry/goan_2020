@@ -65,32 +65,35 @@ var prepare_cancellationApi_data = async(req) => {
         avgPrice: avgPrice,
         fieldType: fieldType
     }
+    console.log("this is the API_DATA : " + CANCELLATION_API_DATA.hours + "\n");
+
     return CANCELLATION_API_DATA;
 }
 
 exports.call_the_CCancel_api = (req, res, next) => {
     var API_DATA = prepare_cancellationApi_data(req);
-    var request = require('request');
-    var options = {
-        // here we will put the URL
-        uri: '',
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        json: true,
-        body: {
-            'LeadTime': API_DATA.hours,
-            'IsRepeatedGuest': API_DATA.isRepeatedGuest,
-            'PreviousCancellations': API_DATA.numberPC,
-            'PreviousBookingsNotCanceled': API_DATA.numberP_Ok,
-            'avgPrice': API_DATA.avgPrice,
-            'fieldType': API_DATA.fieldType
-        }
-    };
-
-    request(options, function(error, response, body) {
-        if (!error && response.statusCode == 200) {
-            req.Is_Able_to_Cancel = response.is_canceled;
-            next(); // Print the shortened url.
-        }
+    API_DATA.then(API_DATA => {
+        axios = require('axios');
+        axios({
+            method: 'post',
+            url: 'https://goan-ml.herokuapp.com/predictCan/',
+            data: {
+                'LeadTime': API_DATA.hours,
+                'IsRepeatedGuest': API_DATA.isRepeatedGuest,
+                'PreviousCancellations': API_DATA.numberPC,
+                'PreviousBookingsNotCanceled': API_DATA.numberP_Ok,
+                'avgPrice': API_DATA.avgPrice,
+                'fieldType': API_DATA.fieldType
+            }
+        }, {
+            headers: { 'content-type': 'application/json' }
+        }).then(res => {
+            console.log("this is the response.is_canceled : " + res.data.is_canceled + "\n");
+            req.is_canceled = res.data.is_canceled;
+            next();
+        }).catch(err => {
+            console.log(err);
+        });
     });
+
 }

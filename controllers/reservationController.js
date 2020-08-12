@@ -105,6 +105,8 @@ exports.createReservation = (req, res, next) => {
     const reservationTime = req.body.G_Time;
     const totalCost = req.body.G_TotalCost;
 
+    var is_canceled = req.is_canceled
+
     const userId = req.userId;
     const type = req.type;
     var user = navigation(type);
@@ -127,7 +129,7 @@ exports.createReservation = (req, res, next) => {
                 fieldId: fieldId,
                 totalCost: totalCost,
                 status: 'OK',
-                canCancel: 1
+                canCancel: is_canceled
             });
         })
         .then(is_created => {

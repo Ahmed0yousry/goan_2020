@@ -4,7 +4,7 @@ const { body } = require('express-validator/check');
 const playerPaying = require('../middleware/playerPaying');
 const ownerReceiving = require('../middleware/ownerReceiving');
 const createPaymentTrans = require('../middleware/createPaymentTrans');
-
+const canCancel = require('../middleware/canCancel');
 
 const isAuth = require('../middleware/is_auth');
 const reservationController = require('../controllers/reservationController');
@@ -15,6 +15,7 @@ router.get('/getAvailableTimes/:FiledId/:Date', isAuth, reservationController.ge
 router.get('/getAllPlayGround_Reservations/:playGroundId', isAuth, reservationController.getAllPlayGround_Reservations);
 
 router.post('/createReservation', isAuth,
+    canCancel.call_the_CCancel_api,
     playerPaying,
     reservationController.createReservation,
     createPaymentTrans,

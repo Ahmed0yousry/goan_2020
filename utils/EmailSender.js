@@ -1,7 +1,7 @@
 require('dotenv').config()
 const mailgun = require("mailgun-js");
-const DOMAIN = process.env.DOMAIN;
-const api_key = process.env.API_KEY;
+const DOMAIN = process.env.MAILGUN_DOMAIN;
+const api_key = process.env.MAILGUN_API_KEY;
 const mg = mailgun({ apiKey: api_key, domain: DOMAIN });
 
 module.exports = (user_email, verification_code) => {

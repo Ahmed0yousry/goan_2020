@@ -5,6 +5,7 @@
     /signUp
     /verifySignUP
     /logIn
+    /getUserProfile
   #### for playgrounds:
     /playgrounds/createPlayGround
     /playgrounds/updatePlayGround
@@ -16,7 +17,6 @@
     /reservation/createReservaion
     /reservation/getAllPlayGround_Reservations/:playGroundId
   #### for player
-    /player/getPlayerProfile/:playerId
     /player/getAllPlayer_Reservations/:playerId
     /player/searchPlayGrounds/:governate/:price
   #### for cancelation

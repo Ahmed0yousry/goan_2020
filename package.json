@@ -16,7 +16,7 @@
         "generate-sms-verification-code": "^1.0.5",
         "http-errors": "~1.6.3",
         "jsonwebtoken": "^8.5.1",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "mailgun-js": "^0.22.0",
         "morgan": "~1.9.1",
         "mysql2": "^2.1.0",
